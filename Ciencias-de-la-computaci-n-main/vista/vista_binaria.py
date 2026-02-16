@@ -11,6 +11,24 @@ class VistaBusquedaBinaria(QWidget):
 
         layout = QVBoxLayout(self)
 
+        # ===== BOTÓN VOLVER (ARRIBA) =====
+        self.btn_volver = QPushButton("⬅ Volver")
+        self.btn_volver.setFixedWidth(120)
+        self.btn_volver.setStyleSheet("""
+            QPushButton{
+                background:#588157;
+                color:white;
+                padding:8px;
+                font-size:14px;
+            }
+            QPushButton:hover{
+                background:#6a994e;
+            }
+        """)
+        self.btn_volver.clicked.connect(self.volver)
+
+        layout.addWidget(self.btn_volver, alignment=Qt.AlignLeft)
+
         # ===== PARTE SUPERIOR =====
         top = QHBoxLayout()
 
@@ -51,6 +69,8 @@ class VistaBusquedaBinaria(QWidget):
         self.tabla = QTableWidget()
         self.tabla.setColumnCount(1)
         self.tabla.setHorizontalHeaderLabels(["Claves"])
+        self.tabla.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.tabla.verticalHeader().setVisible(False)
         layout.addWidget(self.tabla)
 
         # ===== SALIDA =====
@@ -58,13 +78,10 @@ class VistaBusquedaBinaria(QWidget):
         self.salida.setReadOnly(True)
         layout.addWidget(self.salida)
 
-        btn_volver = QPushButton("⬅ Volver")
-        btn_volver.clicked.connect(self.volver)
-        layout.addWidget(btn_volver)
-
         # 👉 CONTROLADOR AL FINAL
         self.controlador = ControladorBusquedaBinaria(self)
 
+    # ===== MÉTODOS AUXILIARES =====
     def pedir_valor(self, titulo):
         return QInputDialog.getText(self, titulo, "Ingrese la clave:")
 
@@ -73,6 +90,8 @@ class VistaBusquedaBinaria(QWidget):
         i.setTextAlignment(Qt.AlignCenter)
         return i
 
+    # ===== NAVEGACIÓN =====
     def volver(self):
         self.anterior.show()
         self.close()
+
