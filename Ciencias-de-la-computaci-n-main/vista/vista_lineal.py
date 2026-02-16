@@ -11,6 +11,13 @@ class VistaBusquedaLineal(QWidget):
 
         layout = QVBoxLayout(self)
 
+        # === BOTÓN VOLVER (ARRIBA) ===
+        self.btn_volver = QPushButton("⬅ Volver")
+        self.btn_volver.setFixedWidth(120)
+        self.btn_volver.clicked.connect(self.regresar)
+
+        layout.addWidget(self.btn_volver, alignment=Qt.AlignLeft)
+
         # === PARTE SUPERIOR ===
         top = QHBoxLayout()
         self.input_rango = QLineEdit()
@@ -58,20 +65,21 @@ class VistaBusquedaLineal(QWidget):
 
         self.controlador = ControladorBusquedaLineal(self)
 
+    # ===== NAVEGACIÓN =====
+    def regresar(self):
+        self.anterior.show()
+        self.close()
+
     # ===== MÉTODOS VISUALES =====
     def crear_tabla(self, filas):
         self.tabla.setRowCount(filas)
-        
-        # Mostrar encabezado vertical
         self.tabla.verticalHeader().setVisible(True)
 
-        # Asignar números de posición (1,2,3,...)
         for i in range(filas):
             self.tabla.setVerticalHeaderItem(
                 i, QTableWidgetItem(str(i + 1))
             )
             self.tabla.setItem(i, 0, QTableWidgetItem(""))
-
 
     def actualizar_tabla(self, datos):
         self.tabla.clearContents()
