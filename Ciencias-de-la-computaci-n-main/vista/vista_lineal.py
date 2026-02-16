@@ -61,8 +61,17 @@ class VistaBusquedaLineal(QWidget):
     # ===== MÉTODOS VISUALES =====
     def crear_tabla(self, filas):
         self.tabla.setRowCount(filas)
+        
+        # Mostrar encabezado vertical
+        self.tabla.verticalHeader().setVisible(True)
+
+        # Asignar números de posición (1,2,3,...)
         for i in range(filas):
+            self.tabla.setVerticalHeaderItem(
+                i, QTableWidgetItem(str(i + 1))
+            )
             self.tabla.setItem(i, 0, QTableWidgetItem(""))
+
 
     def actualizar_tabla(self, datos):
         self.tabla.clearContents()
@@ -74,3 +83,4 @@ class VistaBusquedaLineal(QWidget):
 
     def mensaje(self, texto):
         self.salida.append(texto)
+
